@@ -1,0 +1,13 @@
+
+1. Zaprojektowanie bazy danych dla danych giełdowych
+
+ * utworzenie schematu bazy danych dla danych giełdowych:
+ - postaraj się użyć jakiegoś narzędzia do tej pracy,
+ - zaprojektowanie wszystkich tabel,
+ - nie da mi się jej
+
+ * pobieranie danych z bazy nie wyklucza sposobu tworzenia analiz,
+
+2. Zaprojektowanie Raport designer:
+
+ * get data from the database(between dates and for specific companies)
