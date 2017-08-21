@@ -1,13 +1,93 @@
 
-1. Zaprojektowanie bazy danych dla danych giełdowych
+1. Stock analizer:
 
- * utworzenie schematu bazy danych dla danych giełdowych:
- - postaraj się użyć jakiegoś narzędzia do tej pracy,
- - zaprojektowanie wszystkich tabel,
- - nie da mi się jej
+ * move here elements associated with the stock,
 
- * pobieranie danych z bazy nie wyklucza sposobu tworzenia analiz,
+ * we can store all the data in csv files in github,
+ * w can get the data from 15 years from now and store it,
+ * during analisis if data is more recent that data then download rest of the data and add it to our files
+ * during analisis we can create a files with the results and store it.
+ * we will store all the data into noSQL mongoDB database,
+ * we will store it in files on our machine and then move it into github
+ * now we can learn a bit more about that database,
+ * then create schemas and move all the data there,
 
-2. Zaprojektowanie Raport designer:
+ * do we need cloud database yet?:
+ - we want create a faster data analizer
+ - this analizer needs this type of database? -> no
+ . we can store our data in the csv files,
+ . do we need download them all the time? -> całości?
 
- * get data from the database(between dates and for specific companies)
+
+2. Utworzenie bazy danych dla danych giełdowych:
+
+ * jaki zakres czasowy?
+ - 15 lat początkowo
+
+ * jaki plik?
+ - mongo data manager oraz stock data manager
+
+ * jaki poziom generyczności?: max!!!
+
+ * where should i parse stock data into json format?
+ - we can download it and store it directly into mongo db instance
+
+* TASK FOR TODAY:
+
+ - TEST ALL METHODS
+
+ - LOAD ALL DATA FROM THE DATABASE AND MAKE A ANALISIS
+
+3. Load that all data from the mongodb database:
+
+ * load data from json to arrays
+ - mongo data manager can manage that,
+ - load items from the database between specified dates,
+
+ * parse json to arrays
+
+4. How to analize the data:
+
+ * save analisis to stock_analizer stock analisis
+ * specify dates and analisis range
+ * stock analizer:
+ - receives the data and dates range,
+ - makes an analisi stores the results in the database,
+ - this analizer should analise all stock coefficients,
+
+5. Rozkminka wykonywania query na bazie w kontekście działania mojej bazy danych:
+
+ * jakie posiadamy możliwości:
+ - here we can use just simple find method()
+
+6. Database refactor
+
+ * mongo db schemas
+
+7. MongoDB refactor
+
+8. Napisanie metod do ładowania danych na temat giełd świata:
+
+ * StockDataManager
+
+9. In analizer create a method to load all the data from the data base and make a analisis:
+
+ * analier should return the results,
+
+ * in run we can load the data, parse it and make a analisis,
+
+ * also at the end we can save it into the database
+
+ * all operations have to be performed using arrays
+
+10. Analizowanie wielowątkowe
+
+ * Poczytanie na temat wielowątkowości w pythonie:
+ - poznaj jakie są fajne zastosowania i w jakim momęcie
+ - how to really spead up my program
+ - how to speed up python program
+
+ * we should make a coupling with the threads
+
+ * trzeba podzielić zadania do wykonania na takie, które można wykonać wielowątkowo.
+
