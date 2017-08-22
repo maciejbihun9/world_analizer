@@ -12,8 +12,11 @@ class StockDataManager:
     Manages company data writing and reading.
     """
 
+    PRICE_COLLECTION = "stock_prices"
+
     def __init__(self, database: str):
-        self.stockDataManager = MongoDataManager(database)
+        self.mongoDataManager = MongoDataManager(database)
+        self.collection = StockDataManager.PRICE_COLLECTION
 
     @staticmethod
     def load_company_data(company: str):
@@ -61,7 +64,7 @@ class StockDataManager:
         Saves data from csv files into mongo db.
         After parsing, removes data from the folder.
         """
-        self.stockDataManager.save_item(collection, json_items)
+        self.mongoDataManager.save_item(collection, json_items)
 
     @staticmethod
     def get_s_and_p_names():
@@ -115,12 +118,19 @@ class StockDataManager:
         """
         Saves one or many stock day prices
         """
-        self.stockDataManager.save_item(comp_name, comp_data)
+        self.mongoDataManager.save_item(comp_name, comp_data)
 
     def load_comp_data(self, comp_name):
         """
         Loads all data associated with specified company
         """
-        items = self.stockDataManager.get_items(comp_name, None, None)
+        items = self.mongoDataManager.get_items(comp_name, None, None)
 
+    def load_comp_data_in_range(self, comp_name: str, start_data: datetime, end_date: datetime):
+        """
+        Loads comp data between specified dates range.
+        """
+        query = {"Name" : comp_name}
+        self.mongoDataManager.get_items(self.collection, query)
+        db.items.find({"age" : {$gte:30}})
 

@@ -14,6 +14,10 @@ stockDataManager = MongoDataManager(database)
 
 stock_comps = stockDataManager.get_items(collection, {})
 
+obj = {
+    "date" : ISODate()
+}
+
 # parse the data to ndarray -> json paresr
 stock_comps_list = []
 for stock_comp in stock_comps:

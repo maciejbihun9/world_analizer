@@ -32,11 +32,13 @@
  * where should i parse stock data into json format?
  - we can download it and store it directly into mongo db instance
 
-* TASK FOR TODAY:
+ * TASK FOR TODAY:
 
  - TEST ALL METHODS
 
  - LOAD ALL DATA FROM THE DATABASE AND MAKE A ANALISIS
+
+ * dopisanie metod do StockDataManager
 
 3. Load that all data from the mongodb database:
 
@@ -90,4 +92,11 @@
  * we should make a coupling with the threads
 
  * trzeba podzielić zadania do wykonania na takie, które można wykonać wielowątkowo.
+
+11. Zbudowanie nowej bazy danych:
+
+ * z lepszą architekturą,
+
+ * poczytanie na temat mongo db
+ - wyciągnięcie wnisoków oraz zapisanie ich
 

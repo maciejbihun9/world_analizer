@@ -1,0 +1,130 @@
+1. Data modeling:
+
+ # how to build the database that can fill my needs.
+
+a) Embedded data modeling:
+
+ * applications may need to issue fewer queries and updates to complete common operations,
+
+ * Decisions that affect how you model data can affect application performance and database capacity,
+
+ * in the normalized data model the child contains reference to the parent model,
+
+ * With the embedded data model, your application can retrieve the complete patron information with one query,
+
+ * all depends on how many times you want to achive items referenced with parent item,
+ - if this is a common operation then it is better to embed it, if not then better to split it to many tables,
+
+ * In situation when we have many items created by one person then we would go through a lot of repetition,
+ - in this situations we would have to use relational approach,
+  -
+
+b) document validation:
+
+ * we can create a validation for a collection at create time to not allow bad objects to insert,
+
+ * reject documents that violate the validation rules or warn about the violations in the log but allow invalid documents,
+
+ * Validation occurs during updates and inserts. When you add validation to a collection, existing documents do not undergo validation checks until modification,
+
+ * MongoDB applies validation rules to all inserts and updates,
+
+ * If we apply any validator to our collection and some of documents are not fulfill the validator checks
+   the we can update that document and validator won't do anything
+
+ * By default, validationAction is error
+
+ * with  validationAction is set to warn, mongo db allows insertion or update
+
+c) data modeling concepts:
+
+ * different data models may allow applications to use more efficient queries,
+
+ * the database documents can growth a lot, so if the server runs out of memory then will realocate the resources
+
+ - Atomicity:
+
+ * No single write operation can change more than one document,
+
+ * if we have embedded type of documents then we can make a couple of different read and write operations to many
+   related documents,
+
+ * in here one record is a document, all operations inside of it is an atomic operation,
+
+ - Indexing:
+
+ # indeksowanie:
+  - without indexing database has to search on entire database table.
+  - indexes are B-trees,
+  - is that we can insert and delete as quickly as logarthmic time.
+  - data can be easly sorted,
+  - some times database will shose to not use indexes as it is les efficient that just scan all database,
+  - indexing is low efficient in situations where we want to get the data between some period or interval,
+  - indexes should be created only on tables that are frequently searched by,
+  - it taks a lot of space
+
+ * Build indexes on fields that appear often in queries and for all operations that return sorted results.
+
+ * each index contains 8kb memory,
+
+ * each insert must also update any index,
+
+ * high benefit for read operations,
+
+ * we can analise query time using query analizer
+
+ * we can built also many indexes at once on many columns,
+
+ - Large number of collections:
+
+ * Generally, having a large number of collections has no significant performance penalty and results in very good performance.
+   Distinct collections are very important for high-throughput batch processing,
+
+ - Collection Contains Large Number of Small Documents:
+
+ * if we have many small documents in one collection then consider moving it to more organized group of elements,
+ - this will affect the speed of read opertions because we can get it as using single read operation.
+ - indexing will work better
+
+ * for subsets it is better to stay with small documents in a collection,
+
+ * each document contains a small amount of space:
+
+ - each id contains a small amount of the memory so be carefull about creating too many documents.
+
+ * you can save memory by shorten your document fields name length,
+
+ * we can use (FIFO) collections if we want to retrive our objects quickly.
+
+
+ "zapytanie o indeksowanie - jak często to robią oraz na jakich polach konkretnie to posiadają, read write opreations"
+
+ d) Model Examples and patterns:
+
+ * one-to-many:
+ - If your application frequently retrieves the address data with the name information, then your application needs to issue multiple queries to resolve the references.
+   A more optimal schema would be to embed the address data entities in the patron data, as in the following document,
+
+
+ e) model tree structure:
+
+ * we can store database items in tree based architecture using parent reference item,
+
+ * we can store data using tree of children nodes. Each parent node contains children and parent nodes,
+
+ * materialized paths:
+ - we can stre nodes on tree paths
+
+ * nested sets:
+ - optimizes discovering subtrees at the expense of tree mutability(efektywny ale nie zmienialny),
+ -
+
+ e) model specific applications:
+ * Model Data for Atomic Operations:
+ - having data in one document we can update (just make a atomic operation on the data item) without making many updates,
+
+ * Model monetary data:
+ - BSON - which is a decimal-based floating-point format capable of providing exact precision.
+ -
+
+
