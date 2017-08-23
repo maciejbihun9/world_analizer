@@ -19,6 +19,7 @@ class StockComparator:
         for stock_price_1 in stock_prices_1:
             if stock_price_1[0] in com_dates:
                 stock_prices_by_dates[stock_price_1[0]][0] = stock_price_1[1:5]
+
         for stock_price_2 in stock_prices_2:
             if stock_price_2[0] in com_dates:
                 stock_prices_by_dates[stock_price_2[0]][1] = stock_price_2[1:5]

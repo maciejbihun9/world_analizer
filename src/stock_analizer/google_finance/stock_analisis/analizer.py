@@ -3,7 +3,7 @@ from numpy import *
 """
 Method should have one responsibility,
 Jakie parametry:
-* dane do analizowania wraz z opisem typu tych danych 
+* data do analizowania wraz z opisem typu tych danych 
 * if we want to test it we have to parse data from the file -> that is ok, because either way 
 we should have to create a method to prepare this data.
 * doing this we create a coupling between downloading data and analising it.
