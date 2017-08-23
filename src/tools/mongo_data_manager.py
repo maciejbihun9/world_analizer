@@ -1,6 +1,7 @@
 import pymongo
 from pymongo import MongoClient
 import warnings
+import logging
 
 class MongoDataManager:
     """
@@ -13,6 +14,8 @@ class MongoDataManager:
 
     def __init__(self, database: str):
         # make a connection to the localhost
+        FORMAT = '%(asctime)-15s %(clientip)s %(user)-8s %(message)s'
+        logging.basicConfig(format=FORMAT)
         client = MongoClient('localhost', 27017)
         #  access database
         self.db = client[database]
@@ -39,7 +42,10 @@ class MongoDataManager:
         """
         if collection not in self.db.collection_names():
             raise Exception(MongoDataManager.COLLECTION_DOES_NOT_EXISTS)
-        self.db[collection].insert(item)
+        try:
+            self.db[collection].insert(item)
+        except:
+            logging.debug("It was problem with: {}".format(item))
 
     def get_items(self, collection: str, query: dict) -> list:
         """

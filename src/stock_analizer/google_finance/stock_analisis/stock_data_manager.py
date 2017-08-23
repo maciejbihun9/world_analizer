@@ -3,11 +3,13 @@ from datetime import datetime
 from pandas import DataFrame
 import pandas_datareader.data as web
 from src.tools.mongo_data_manager import MongoDataManager
+from datetime import datetime
+from src.tools.converter import Converter
 from numpy import *
 import os
 
 
-class StockDataManager:
+class StockPricesDataManager(MongoDataManager):
     """
     Manages company data writing and reading.
     """
@@ -15,19 +17,16 @@ class StockDataManager:
     PRICE_COLLECTION = "stock_prices"
 
     def __init__(self, database: str):
-        self.mongoDataManager = MongoDataManager(database)
-        self.collection = StockDataManager.PRICE_COLLECTION
+        MongoDataManager.__init__(self, database)
+        self.collection = StockPricesDataManager.PRICE_COLLECTION
 
     @staticmethod
-    def load_company_data(company: str):
+    def load_company_data(url: str):
         """
         Loads data from csv file into numpy ndarray
         :param company: company name as string
         """
         prices = []
-        url = '../../../resources/google_s_and_p/'
-        file_name = company + '_data.csv'
-        url += file_name
         file = open(url)
         next(file)
         for line in file.readlines():
@@ -35,7 +34,7 @@ class StockDataManager:
             if '' in line_elements:
                 continue
             else:
-                prices.append(array([str(line_elements[0]) ,float(line_elements[1]), float(line_elements[2]), float(line_elements[3]), float(line_elements[4]), float(line_elements[5])], dtype=object))
+                prices.append(array([Converter.string_to_date(line_elements[0]) ,float(line_elements[1]), float(line_elements[2]), float(line_elements[3]), float(line_elements[4]), float(line_elements[5]), str(line_elements[6])], dtype=object))
         return array(prices)
 
     @staticmethod
@@ -64,7 +63,7 @@ class StockDataManager:
         Saves data from csv files into mongo db.
         After parsing, removes data from the folder.
         """
-        self.mongoDataManager.save_item(collection, json_items)
+        self.save_item(collection, json_items)
 
     @staticmethod
     def get_s_and_p_names():
@@ -116,21 +115,48 @@ class StockDataManager:
 
     def save_comp(self, comp_name, comp_data):
         """
-        Saves one or many stock day prices
+        Saves company data
         """
-        self.mongoDataManager.save_item(comp_name, comp_data)
+        self.save_item(comp_name, comp_data)
 
-    def load_comp_data(self, comp_name):
+    def load_comp_data(self, collection: str, comp_name: str):
         """
         Loads all data associated with specified company
         """
-        items = self.mongoDataManager.get_items(comp_name, None, None)
-
-    def load_comp_data_in_range(self, comp_name: str, start_data: datetime, end_date: datetime):
-        """
-        Loads comp data between specified dates range.
-        """
         query = {"Name" : comp_name}
-        self.mongoDataManager.get_items(self.collection, query)
-        db.items.find({"age" : {$gte:30}})
+        return self.get_items(collection, query)
 
+    def load_comps_data_btn_dates(self, collection: str, comp_names: list, start_date: datetime, end_date: datetime):
+        """
+        Loads all data associated with specified companies.
+        """
+        mongoDataManager = MongoDataManager("stock")
+        if start_date == None or end_date == None:
+            comp_names = [{"Name": comp_name} for comp_name in comp_names]
+            # query = {"$or": [{"Name": "NSC"}, {"Name": "MMM"}]}
+            query = {"$or": comp_names}
+        else:
+            comp_names = [{"Name": comp_name} for comp_name in comp_names]
+            query = {"$and" : [{"$or": comp_names}, {"Date" : {"$gte": start_date, "$lt" : end_date}}]}
+        return self.get_items(collection, query)
+
+    def load_comp_data_btn_dates(self, comp_name: str, start_date: datetime, end_date: datetime):
+        """
+        Loads company data between specified date range.
+        """
+        query = {'Name': comp_name, "Date" : {'$gte': start_date, '$lt': end_date}}
+        return self.get_items(self.collection, query)
+
+    def load_comp_data_btn_attr_values(self, comp_name: str, attr: str, min: float, max: float):
+        """
+        Loads company data that's between specified range.
+        """
+        query = {'Name': comp_name, attr : {'$gte': min, '$lt': max}}
+        return self.get_items(self.collection, query)
+
+    def load_comp_data_btn_vals_and_dates(self, comp_name: str, attr: str, start_date: datetime, end_date: datetime, min: float, max: float):
+        """
+        Loads company data that's between specified range and between dates.
+        """
+        query = {'Name': comp_name, attr : {'$gte': min, '$lt': max}}
+        self.get_items(self.collection, query)

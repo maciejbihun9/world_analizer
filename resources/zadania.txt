@@ -85,8 +85,8 @@
 10. Analizowanie wielowątkowe
 
  * Poczytanie na temat wielowątkowości w pythonie:
- - poznaj jakie są fajne zastosowania i w jakim momęcie
- - how to really spead up my program
+ - poznaj jakie są fajne zastosowania i w jakim momencie,
+ - how to really spead up my program,
  - how to speed up python program
 
  * we should make a coupling with the threads
@@ -99,4 +99,38 @@
 
  * poczytanie na temat mongo db
  - wyciągnięcie wnisoków oraz zapisanie ich
+
+12. Zapisanie do bazy danych obiektów z datami:
+
+13. Rozkminka poprawności architektury bazy.
+
+14. Zapisanie do bazy cen akcji spółek
+
+15. Create stockDataManger database api for database access:
+
+16. Można zacząć robić analize korelacji:
+
+ * przeprowadzenie analizy korelacji dla kilku firm oraz zapisanie ich do bazy danych.
+
+ * doprowadzenie o poządku analizer'a
+
+ * przeprowadzenie testowych analiz
+
+ * zapisanie ich do bazy danych
+
+17. Architektura analizera:
+
+ * Klasa analizer:
+ - posiada metody do korelacji, do analizy volumenów, itd,
+ - każda posiada również range dat oraz możliwość wprowadzenia atrybutów
+ - napisanie metody do analizy korelacji oraz zapisanie jej do kolekcji za pomocą nowego datamenagera.
+
+18. Archtektura data manager'a:
+
+ * każda kolekcja powinna posidać osobny data manager, powinna dziedziczyć po data_manager
+ - rozkminka dziedziczenia w pythonie
+
+ * and oraz or na wysokim poziomie abstrakcji nie sa potrzebne
+
+ * za każdym razem można je lepieje ostosować w zależności od kolekcji.
 
