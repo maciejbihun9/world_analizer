@@ -115,6 +115,19 @@
  * doprowadzenie o poządku analizer'a
 
  * przeprowadzenie testowych analiz
+ - czy można załadować dane aby były posortowane po dacie?(typu: "jedna data - pare elementów")
+ - dobrze by było mieć je posortowane po nazwie spółki,
+ - można je wyciągnąc z bazy w ten sposób, ale do tego potrzeba wielu zapytań,
+ - or we can just split it in the program(if we have many companies the it would be not fast enough(300)),
+ - how ew should save it in the database?(for all dates? -> no)
+ - podczas porównywanie korelacji jeśli nie mamy wartości dla danej daty to jest 0.
+ - daty pobieramy z firmy do której porównujemy, if not exists the nwe can set to zero,
+ - comp[date]
+ - or maybe just put it into seperate collections -> many collections and queries,
+ - we can process it in the program - > split it
+ - where we should process the data():
+ - we will process the data in the program -> we will split the data by company name,
+ -
 
  * zapisanie ich do bazy danych
 
@@ -132,5 +145,15 @@
 
  * and oraz or na wysokim poziomie abstrakcji nie sa potrzebne
 
- * za każdym razem można je lepieje ostosować w zależności od kolekcji.
+ * za każdym razem można je lepiej je zastosować w zależności od kolekcji.
+
+19. How to plan your tasks:
+
+ * where to write about that,
+ * maybe find some tools to plan things:
+ - plan things for the future,
+ - w can start planning things after we ended some big project and we have some extented perspective on problems
+ - now we can save proiblems that we are facing and in the future try to avoid them.
+
+ * We can create git hub project and move there all the data about project thouhts
 

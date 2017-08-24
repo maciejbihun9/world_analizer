@@ -24,13 +24,11 @@ class Converter:
         return json_items
 
     @staticmethod
-    def json_to_ndarray(json_object) -> ndarray:
-        comp_prices = json_object["stock_prices"]
+    def json_to_ndarray(dict_object) -> ndarray:
         days_prices = []
-        for day_prices in comp_prices:
+        for day_prices in dict_object:
             days_prices.append(list(day_prices.values())[1:])
         return array(days_prices)
-
 
     """
     Date methods
@@ -45,7 +43,4 @@ class Converter:
         except:
             raise Exception(Converter.NOT_PROPERLY_FORMATTED)
         return dt
-
-
-
 
