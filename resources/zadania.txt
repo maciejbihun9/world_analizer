@@ -1,159 +1,26 @@
+1. Jakie analizy można wykonać na danych giełdowych?
 
-1. Stock analizer:
+ * próba zastosowania crawlera oraz poznanie jego możliwości,
 
- * move here elements associated with the stock,
+ * jakie analizy giełdowe są wykonywane
 
- * we can store all the data in csv files in github,
- * w can get the data from 15 years from now and store it,
- * during analisis if data is more recent that data then download rest of the data and add it to our files
- * during analisis we can create a files with the results and store it.
- * we will store all the data into noSQL mongoDB database,
- * we will store it in files on our machine and then move it into github
- * now we can learn a bit more about that database,
- * then create schemas and move all the data there,
+2. Jakie dane giełdowe są dostępne oraz jakie analizy zostały na nich robione?
 
- * do we need cloud database yet?:
- - we want create a faster data analizer
- - this analizer needs this type of database? -> no
- . we can store our data in the csv files,
- . do we need download them all the time? -> całości?
+ * przeglądanie kaggle, bo może wpadnie fajne źródło danych.
 
+3. Plan działania:
 
-2. Utworzenie bazy danych dla danych giełdowych:
+ * Rozkminka tego jakie dane giełdowe można uzyskać:
+ - w kontekście takim, że jakie dane można by było dodać oraz
+ jakie zapytania mogły by się pojawić.
 
- * jaki zakres czasowy?
- - 15 lat początkowo
+ * potrzebuję niezliczonej ilości danych na tamat rynków oraz giełd światowych,
 
- * jaki plik?
- - mongo data manager oraz stock data manager
+ * dane na temat ekonomi danego
 
- * jaki poziom generyczności?: max!!!
+4. Jak szukać i jakich danych giełdowych oraz jakiego formatu się spodziewam.
 
- * where should i parse stock data into json format?
- - we can download it and store it directly into mongo db instance
+ * Jakie są możliwości yahoo finance?
+ - Dodanie Api do stock data managera. Później pomyśle na temat przerzucenia tego gdzieś indziej.
 
- * TASK FOR TODAY:
-
- - TEST ALL METHODS
-
- - LOAD ALL DATA FROM THE DATABASE AND MAKE A ANALISIS
-
- * dopisanie metod do StockDataManager
-
-3. Load that all data from the mongodb database:
-
- * load data from json to arrays
- - mongo data manager can manage that,
- - load items from the database between specified dates,
-
- * parse json to arrays
-
-4. How to analize the data:
-
- * save analisis to stock_analizer stock analisis
- * specify dates and analisis range
- * stock analizer:
- - receives the data and dates range,
- - makes an analisi stores the results in the database,
- - this analizer should analise all stock coefficients,
-
-5. Rozkminka wykonywania query na bazie w kontekście działania mojej bazy danych:
-
- * jakie posiadamy możliwości:
- - here we can use just simple find method()
-
-6. Database refactor
-
- * mongo db schemas
-
-7. MongoDB refactor
-
-8. Napisanie metod do ładowania danych na temat giełd świata:
-
- * StockDataManager
-
-9. In analizer create a method to load all the data from the data base and make a analisis:
-
- * analier should return the results,
-
- * in run we can load the data, parse it and make a analisis,
-
- * also at the end we can save it into the database
-
- * all operations have to be performed using arrays
-
-10. Analizowanie wielowątkowe
-
- * Poczytanie na temat wielowątkowości w pythonie:
- - poznaj jakie są fajne zastosowania i w jakim momencie,
- - how to really spead up my program,
- - how to speed up python program
-
- * we should make a coupling with the threads
-
- * trzeba podzielić zadania do wykonania na takie, które można wykonać wielowątkowo.
-
-11. Zbudowanie nowej bazy danych:
-
- * z lepszą architekturą,
-
- * poczytanie na temat mongo db
- - wyciągnięcie wnisoków oraz zapisanie ich
-
-12. Zapisanie do bazy danych obiektów z datami:
-
-13. Rozkminka poprawności architektury bazy.
-
-14. Zapisanie do bazy cen akcji spółek
-
-15. Create stockDataManger database api for database access:
-
-16. Można zacząć robić analize korelacji:
-
- * przeprowadzenie analizy korelacji dla kilku firm oraz zapisanie ich do bazy danych.
-
- * doprowadzenie o poządku analizer'a
-
- * przeprowadzenie testowych analiz
- - czy można załadować dane aby były posortowane po dacie?(typu: "jedna data - pare elementów")
- - dobrze by było mieć je posortowane po nazwie spółki,
- - można je wyciągnąc z bazy w ten sposób, ale do tego potrzeba wielu zapytań,
- - or we can just split it in the program(if we have many companies the it would be not fast enough(300)),
- - how ew should save it in the database?(for all dates? -> no)
- - podczas porównywanie korelacji jeśli nie mamy wartości dla danej daty to jest 0.
- - daty pobieramy z firmy do której porównujemy, if not exists the nwe can set to zero,
- - comp[date]
- - or maybe just put it into seperate collections -> many collections and queries,
- - we can process it in the program - > split it
- - where we should process the data():
- - we will process the data in the program -> we will split the data by company name,
- -
-
- * zapisanie ich do bazy danych
-
-17. Architektura analizera:
-
- * Klasa analizer:
- - posiada metody do korelacji, do analizy volumenów, itd,
- - każda posiada również range dat oraz możliwość wprowadzenia atrybutów
- - napisanie metody do analizy korelacji oraz zapisanie jej do kolekcji za pomocą nowego datamenagera.
-
-18. Archtektura data manager'a:
-
- * każda kolekcja powinna posidać osobny data manager, powinna dziedziczyć po data_manager
- - rozkminka dziedziczenia w pythonie
-
- * and oraz or na wysokim poziomie abstrakcji nie sa potrzebne
-
- * za każdym razem można je lepiej je zastosować w zależności od kolekcji.
-
-19. How to plan your tasks:
-
- * where to write about that,
- * maybe find some tools to plan things:
- - plan things for the future,
- - w can start planning things after we ended some big project and we have some extented perspective on problems
- - now we can save proiblems that we are facing and in the future try to avoid them.
-
- * We can create git hub project and move there all the data about project thouhts
-
+ 

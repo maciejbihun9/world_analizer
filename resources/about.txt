@@ -1,0 +1,6 @@
+GŁÓWNE CELE SYSTEMU
+ * powiedz mi coś o tym świecie:
+ - na podstawie danych giełdowych powiedz mi coś o giełdzie
+ - pokaż mi jakieś ukryte zalezności w danych(do tego potrzeba dużej ilości danych oraz wiedzy na temat ich analizy),
+ - ale ja nie chce standardowej analizy rynkowej.
+ - powiedz mi coś na temat tych danych
