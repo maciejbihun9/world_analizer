@@ -1,11 +1,14 @@
 
 from datetime import datetime
 from pandas import DataFrame
-import pandas_datareader.data as web
 from src.tools.mongo_data_manager import MongoDataManager
 from datetime import datetime
+from src.stock_analizer.yahoo_finance.adjuster import Adjuster
 from src.tools.converter import Converter
+from pandas_datareader import data
+import pandas as pd
 from numpy import *
+import sys
 import os
 
 
@@ -46,16 +49,14 @@ class StockPricesDataManager(MongoDataManager):
         """
         not_parsed = []
         for i, company in enumerate(stock_companies):
-            try:
-                company_df = web.DataReader(stock_name + ':{0}'.format(company), 'google', start_date, end_date)
+                # company_df = data.DataReader(stock_name + ':{0}'.format(company), 'finance', start_date, end_date)
+                company_df = data.DataReader([company], 'yahoo', start_date, end_date)
+                company_df = Adjuster.data_weekends_and_miss_data_adj(company_df, start_date, end_date)
                 company_df['Name'] = company
                 stock_companies_size = len(stock_companies)
                 output_name = folder + company + '_' + str(stock_companies_size) + '_' + str(start_date.year) + '_' + str(end_date.year) + '_data.csv'
                 company_df.to_csv(output_name)
                 print("{} : parsed".format(company))
-            except:
-                not_parsed.append(company)
-                continue
         print("Companies not parsed: {}".format(not_parsed))
 
     def stocks_data_to_mongo(self, collection: str, json_items: str):

@@ -2,18 +2,16 @@ from numpy import *
 from sklearn.preprocessing import LabelEncoder
 from sklearn.preprocessing import OneHotEncoder
 from sklearn import linear_model, datasets, model_selection
-import shutil
+import pandas as pd
 import os
 import glob
-
-
 
 
 class DataManager:
     """
     Data Manager job is to load entire data.
-    Data Manager does not care about what kind of data actually exists in dataset.
-    We can remove unused data items during specific logistic regression problem.
+    Data Manager does not care about data types.
+    We can remove unused data items before specific tasks.
     We should not use here any patterns that not load specific signs.
     """
 
@@ -177,9 +175,33 @@ class DataManager:
         for f in files:
             os.remove(f)
 
+    @staticmethod
+    def create_Data_Frame(data: ndarray, index: list, columns: list) -> pd.DataFrame:
+        m,n = shape(data)
+        if m != len(index):
+            print("Indexes and the data not the same length.")
+        if n != len(columns):
+            print("Columns and the data not the same length.")
+        return pd.DataFrame(data, index=index, columns=columns)
 
+    @staticmethod
+    def get_data_frame_values(data_frame: pd.DataFrame)->list:
+        """
+        Returns DataFrame values.
+        """
+        return data_frame.get_values()
 
+    @staticmethod
+    def get_data_frame_columns(data_frame: pd.DataFrame)-> list:
+        """
+        Returns DataFrame columns.
+        """
+        return list(data_frame.columns.values)
 
-
-
+    @staticmethod
+    def get_data_frame_indexes (data_frame: pd.DataFrame)-> list:
+        """
+        Returns DataFrame indexes.
+        """
+        return list(data_frame.index.values)
 

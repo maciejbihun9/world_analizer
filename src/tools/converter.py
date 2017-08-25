@@ -9,7 +9,7 @@ class Converter:
     Json methods
     """
     @staticmethod
-    def lists_to_json(items: list, cols_names_types: dict) -> str:
+    def lists_to_json(items: list, cols_names_types: list) -> str:
         """
         Maps all data with that titles.
         :param: items: list of list with string items.

@@ -11,10 +11,9 @@
 3. Plan działania:
 
  * Rozkminka tego jakie dane giełdowe można uzyskać:
- - w kontekście takim, że jakie dane można by było dodać oraz
- jakie zapytania mogły by się pojawić.
+ - w kontekście takim, że jakie dane można by było dodać oraz jakie zapytania mogły by się pojawić.
 
- * potrzebuję niezliczonej ilości danych na tamat rynków oraz giełd światowych,
+ * potrzebuję nie zliczonej ilości danych na tamat rynków oraz giełd światowych,
 
  * dane na temat ekonomi danego
 
@@ -22,5 +21,22 @@
 
  * Jakie są możliwości yahoo finance?
  - Dodanie Api do stock data managera. Później pomyśle na temat przerzucenia tego gdzieś indziej.
+
+ * refactor data manager to fill none data items,
+ - we can do it during data loading.
+ - wirte a maethod that reindexes data
+
+            except Exception:
+                print("Error : {}".format(sys.exc_info()))
+                not_parsed.append(company)
+                continue
+
+5. Do 17 Pandas:
+
+ * DataFrame oraz series, struktury danych pandas,
+
+ * kiedy są najbardziej przydatne.
+
+
 
  

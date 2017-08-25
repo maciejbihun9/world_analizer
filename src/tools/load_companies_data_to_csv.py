@@ -3,11 +3,13 @@ from datetime import datetime
 from src.tools.converter import Converter
 from src.tools.data_manager import DataManager
 
-folder = "../../resources/stock_data/"
+folder = "../../resources/Company Data/"
 
 stock_name = 'NYSE'
 
-stock_companies = StockPricesDataManager.get_s_and_p_names()
+stock_companies = ['BDX', 'BRK.B', 'BBY', 'BIIB', 'BLK', 'HRB', 'BA', 'BWA', 'BXP', 'BSX', 'BHF', 'BMY']
+
+# stock_companies = StockPricesDataManager.get_s_and_p_names()
 
 start_date = datetime(2013, 8, 19)
 

@@ -6,7 +6,7 @@ import os
 import datetime
 # save csv files to the database
 
-folder = '../../resources/stock_data/'
+folder = '../../resources/Company Data/'
 
 stock_database = "stock"
 
