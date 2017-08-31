@@ -37,6 +37,49 @@
 
  * kiedy są najbardziej przydatne.
 
+6. Zbieranie danych ciąg dalszy,
 
+ * explore quandl - 170 zł miesięcznie
+ - not reliable
 
- 
+ * EOD
+
+ * Companies fundamentals data:
+ - Core US Fundamentals Data
+
+ * insider data about companies,
+
+ * web news sentiment data,
+
+ * data about specific companies(historical data also),
+
+ * explore alpha vantage,
+
+7. Jaki jest konkretny cen pobierania danych?
+
+ * pobieranie danych z całego świata oraz danych historycznych od najdawniejszych czasów,
+
+ * pobieranie danych bardzo historycznych nie jest chyba aż tak wymagane:
+ - kiedyś były inne czasy, był gorszy dostęp do informacji,
+
+ * zbudowanie strategii inwestycyjnej dla danych giełdowych,
+
+8. Zadanie do końca dnia:
+
+ * przestudiowanie każdej znalezionej opcji pod kątem jej użyteczności do mojego zadania,
+
+9. Znalezienie giełdowych metod analizy danych:
+
+ * how to develop systems that reacts to market informations.
+ - write all stock indicators,
+ - base on that indicators write functions for predicting the stocks,
+ - first establish what we can take from basic charts,
+ - how is that looks compared to basic stocks indicators,
+
+ * first we want to know what are the best methods for analizing the stocks.
+ - find some articles that's describes some strategies.(If really exist one or maybe some communities),
+ - may be in some universities we have some people that actually implemented something like that,
+
+10. Pandas - odkrywanie możliwości tej biblioteki:
+
+11.
