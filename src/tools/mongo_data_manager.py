@@ -6,17 +6,19 @@ import logging
 class MongoDataManager:
     """
     Manages communication between algorithm and mongoDB database instance.
+    # CREATE A MONGO CLIENT
+    # mongo_client = MongoClient('mongodb://%s:%s@%s:%s' % (username, password, host, port))
+    # mongo_client = MongoClient("127.0.0.1", 27017)
     """
 
     # MONGODB MANAGER EXCEPTION MESSAGES
     COLLECTION_DOES_NOT_EXISTS = "Collection does not exists."
     COLLECTION_EXISTS = "Collection already exists."
 
-    def __init__(self, database: str):
+    def __init__(self, database: str, client: MongoClient):
         # make a connection to the localhost
-        FORMAT = '%(asctime)-15s %(clientip)s %(user)-8s %(message)s'
-        logging.basicConfig(format=FORMAT)
-        client = MongoClient('localhost', 27017)
+        self.mongo_db_logger = logging.getLogger("DB logger")
+        self.mongo_db_logger.setLevel(logging.INFO)
         #  access database
         self.db = client[database]
 
@@ -33,21 +35,35 @@ class MongoDataManager:
         # create indexes for a new collection
         for index in indexes:
             self.create_index(collection, index)
+        print("Collection: {} has been created".format(collection))
 
-    def save_item(self, collection: str, item: dict):
+    def replace_item(self, collection: str, attrs: dict, new_item: dict):
+        """
+        Replaces item and returns weather replacement was successfull.
+        """
+        write_results = self.db[collection].update(attrs, new_item)
+        return bool(write_results["n"])
+
+    def item_exists(self, collection: str, query: dict) -> bool:
+        """
+        Checks if item exists in specified collection.
+        """
+        return bool(self.db[collection].count(query))
+
+    def save_items(self, collection: str, items: list):
         """
         Saves dict item(that figures as a json) to specified database
         :param collection: collection name from given database
-        :param item: json item object to save
+        :param items: list of json(dict) object to save.
         """
         if collection not in self.db.collection_names():
             raise Exception(MongoDataManager.COLLECTION_DOES_NOT_EXISTS)
         try:
-            self.db[collection].insert(item)
-        except:
-            logging.debug("It was problem with: {}".format(item))
+            self.db[collection].insert(items)
+        except Exception as e:
+            logging.error(e)
 
-    def get_items(self, collection: str, query: dict) -> list:
+    def load_items(self, collection: str, query: dict) -> list:
         """
         Retrives an item from given collection using given key
         :return: Returns None if there is no object with given credentials.

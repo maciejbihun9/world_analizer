@@ -16,6 +16,20 @@ class DataManager:
     """
 
     @staticmethod
+    def load_to_data_frame(url: str, index_col: str):
+        """
+        Loads the data from csv and excel files to DataFrame object.
+        """
+        data_frame = pd.read_csv(url, index_col=index_col, parse_dates=True)
+        data_frame.fillna(method="ffill", inplace=True)
+        data_frame.fillna(method="bfill", inplace=True)
+        return data_frame
+
+    @staticmethod
+    def save_to_csv(url: str, data_frame: pd.DataFrame, index: bool):
+        data_frame.to_csv(url, index = index)
+
+    @staticmethod
     def load_data(url: str, miss_first_line: bool, do_convert: bool, split_sign: str) -> list:
         """
         :param url: file to parse url

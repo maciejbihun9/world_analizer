@@ -8,5 +8,5 @@ class SchemaTest(unittest.TestCase):
         database = "stock"
         collection = "NYSE"
         mongoDataManager = MongoDataManager(database)
-        col_items = mongoDataManager.get_items(collection, {"name" : "ABC"})
+        col_items = mongoDataManager.load_items(collection, {"name" : "ABC"})
         print(col_items)

@@ -2,6 +2,7 @@
 from src.tools.mongo_data_manager import MongoDataManager
 from datetime import datetime
 
+#TODO: Check this class under uses in terms of analizing the data.
 class AnalizeDataManager(MongoDataManager):
     """
     Comunicates between application and database analisis collection.
@@ -21,7 +22,7 @@ class AnalizeDataManager(MongoDataManager):
         """
         Saves analisis data
         """
-        self.save_item(self.collection, analisis_data)
+        self.save_items(self.collection, analisis_data)
 
 
     def load_analisis(self, type: str):
@@ -29,7 +30,7 @@ class AnalizeDataManager(MongoDataManager):
         Loads analisis data
         """
         query = {"Type" : type}
-        return self.get_items(self.collection, query)
+        return self.load_items(self.collection, query)
 
 
     def load_best_correls_for(self, num_of_corels: int, comp_name: str, start_date: datetime, end_date: datetime) -> list:
@@ -37,7 +38,7 @@ class AnalizeDataManager(MongoDataManager):
         Loads company names and correlations with the best correlations to specified comp_name between specified dates.
         """
         query = {}
-        return self.get_items(self.collection, query)
+        return self.load_items(self.collection, query)
 
 
     def load_worst_correls_for(self, num_of_correls: int, comp_name: str, start_date: datetime, end_date: datetime) -> list:
@@ -45,14 +46,14 @@ class AnalizeDataManager(MongoDataManager):
         Loads company names and correlations with the best correlations to specified comp_name between specified dates.
         """
         query = {}
-        return self.get_items(self.collection, query)
+        return self.load_items(self.collection, query)
 
     def load_correls_for(self, comp_name: str):
         """
         Loads all companies correlations.
         """
         query = {}
-        return self.get_items(self.collection, query)
+        return self.load_items(self.collection, query)
 
     def load_best_correls(self, num_of_comps: int) -> list:
         """
@@ -61,5 +62,8 @@ class AnalizeDataManager(MongoDataManager):
         return 0
 
     def load_comps_with_the_best_vols(self):
+        """
+
+        """
 
 

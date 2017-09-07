@@ -6,6 +6,7 @@ from datetime import datetime
 from src.stock_analizer.yahoo_finance.adjuster import Adjuster
 from src.tools.converter import Converter
 from pandas_datareader import data
+from pandas_datareader import Options
 import pandas as pd
 from numpy import *
 import sys
@@ -43,15 +44,15 @@ class StockPricesDataManager(MongoDataManager):
     @staticmethod
     def stocks_data_to_csv(stock_name: str, stock_companies: list, start_date: datetime, end_date: datetime, folder: str):
         """
-        Retrives stock data and saves into database with the same name.
+        Stores data from the web into csv files.
         :param company: stock name as a str from we want to get the data.
         :param stock_companies: stock companies names as strings
         """
         not_parsed = []
         for i, company in enumerate(stock_companies):
                 # company_df = data.DataReader(stock_name + ':{0}'.format(company), 'finance', start_date, end_date)
-                company_df = data.DataReader([company], 'yahoo', start_date, end_date)
-                company_df = Adjuster.data_weekends_and_miss_data_adj(company_df, start_date, end_date)
+                company_df = data.DataReader([company], 'google', start_date, end_date)
+                company_df = Adjuster.data_weekends_and_miss_data_adj(company_df, start_date, end_date, str(company))
                 company_df['Name'] = company
                 stock_companies_size = len(stock_companies)
                 output_name = folder + company + '_' + str(stock_companies_size) + '_' + str(start_date.year) + '_' + str(end_date.year) + '_data.csv'
@@ -64,7 +65,7 @@ class StockPricesDataManager(MongoDataManager):
         Saves data from csv files into mongo db.
         After parsing, removes data from the folder.
         """
-        self.save_item(collection, json_items)
+        self.save_items(collection, json_items)
 
     @staticmethod
     def get_s_and_p_names():
@@ -114,24 +115,59 @@ class StockPricesDataManager(MongoDataManager):
                    'WLTW', 'WYN', 'WYNN', 'XEL', 'XRX', 'XLNX', 'XL', 'XYL', 'YUM', 'ZBH', 'ZION', 'ZTS']
         return s_and_p
 
+    @staticmethod
+    def load_dividends(comps_list: list, start_date: datetime, end_date: datetime):
+        """
+        Loads companies dividends
+        """
+        folder = "../../resources/Stock Data/Company Dividends/"
+        print("Dividends parsing...")
+        for comp_name in comps_list:
+            url = str(folder) + str(comp_name) + "_data.csv"
+            try:
+                f = data.DataReader(comp_name, 'yahoo-dividends', start_date, end_date)
+                dividends = f["Dividends"]
+                if len(dividends) != 0:
+                    dividends.to_csv(url)
+                    print("Dividends for: {} parsed.".format(comp_name))
+            except:
+                print("Problems with: {}".format(comp_name))
+
+    @staticmethod
+    def load_options(comp_names: list):
+        """
+        Loads instrument options
+        """
+        folder = "../../resources/Stock Data/Company Options/"
+        time = datetime.now()
+        print("Options parsing...")
+        for comp_name in comp_names:
+            try:
+                url = str(folder) + str(comp_name) + "_data.csv"
+                inst_options = Options(comp_name, 'yahoo')
+                inst_options_data = inst_options.get_all_data()
+                inst_options_data.to_csv(url)
+                print("Options for : {} parsed.".format(comp_name))
+            except:
+                print("Problems with: {}".format(comp_name))
+
     def save_comp(self, comp_name, comp_data):
         """
         Saves company data
         """
-        self.save_item(comp_name, comp_data)
+        self.save_items(comp_name, comp_data)
 
     def load_comp_data(self, collection: str, comp_name: str):
         """
         Loads all data associated with specified company
         """
         query = {"Name" : comp_name}
-        return self.get_items(collection, query)
+        return self.load_items(collection, query)
 
     def load_comps_data_btn_dates(self, collection: str, comp_names: list, start_date: datetime, end_date: datetime):
         """
         Loads all data associated with specified companies.
         """
-        mongoDataManager = MongoDataManager("stock")
         if start_date == None or end_date == None:
             comp_names = [{"Name": comp_name} for comp_name in comp_names]
             # query = {"$or": [{"Name": "NSC"}, {"Name": "MMM"}]}
@@ -139,25 +175,25 @@ class StockPricesDataManager(MongoDataManager):
         else:
             comp_names = [{"Name": comp_name} for comp_name in comp_names]
             query = {"$and" : [{"$or": comp_names}, {"Date" : {"$gte": start_date, "$lt" : end_date}}]}
-        return self.get_items(collection, query)
+        return self.load_items(collection, query)
 
     def load_comp_data_btn_dates(self, comp_name: str, start_date: datetime, end_date: datetime):
         """
         Loads company data between specified date range.
         """
         query = {'Name': comp_name, "Date" : {'$gte': start_date, '$lt': end_date}}
-        return self.get_items(self.collection, query)
+        return self.load_items(self.collection, query)
 
     def load_comp_data_btn_attr_values(self, comp_name: str, attr: str, min: float, max: float):
         """
         Loads company data that's between specified range.
         """
         query = {'Name': comp_name, attr : {'$gte': min, '$lt': max}}
-        return self.get_items(self.collection, query)
+        return self.load_items(self.collection, query)
 
     def load_comp_data_btn_vals_and_dates(self, comp_name: str, attr: str, start_date: datetime, end_date: datetime, min: float, max: float):
         """
         Loads company data that's between specified range and between dates.
         """
         query = {'Name': comp_name, attr : {'$gte': min, '$lt': max}}
-        self.get_items(self.collection, query)
+        self.load_items(self.collection, query)

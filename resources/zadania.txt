@@ -82,4 +82,29 @@
 
 10. Pandas - odkrywanie możliwości tej biblioteki:
 
-11.
+11. Dokładnie doczytać co oferuje mongo db w kontekście naszego problemu
+
+12. Jakie analizy giełdowe będą wykonywane?
+
+ * wiele ich będzie, ale i tak będzie potrzeba każdego współczynnika,
+
+ *  na razie nie posiadamy historycznych danych o spółkach.
+
+13. Strategia umieszczani danych w chmurze.
+
+ * uzyskanie tylko nazw firm z konkretnej giełdy w pliku csv,
+
+ * dla podanych firm skrapuj dane do poisanego formatu oraz umieść to w bazie danych.
+ - utworzenie globalnego web scrapera, który skrapuje poprzez podanie parametrów skrapowania.
+ - utworzenie implemenrtcji do skrapowania strony yahoo
+
+14. Zapisanie stock_summary and stock_stats about all companies to google cloud.
+
+ * napisanie stock_saver:
+ - zapisanie poprawnie wszystkich danuch giełdowych,
+ - refactor kodu, który za to odpowiada - sprzątanie,
+ - napisanie pobierania oraz zapisywania wiadomości na temat danej spółki giełdowej
+
+
+15. Parse stock news
+

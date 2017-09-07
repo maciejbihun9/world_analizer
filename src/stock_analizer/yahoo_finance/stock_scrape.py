@@ -1,5 +1,5 @@
 # from pandas_datareader import data
-import pandas_datareader.data as web
+import pandas_datareader as data
 import matplotlib.pyplot as plt
 import pandas as pd
 
@@ -10,7 +10,7 @@ tickers = ['AAPL', 'MSFT', '^GSPC']
 data_source = 'yahoo'
 
 # We would like all available data from 01/01/2000 until 12/31/2016.
-start_date = '2000-01-01'
+start_date = '2010-01-01'
 end_date = '2016-12-31'
 
 # User pandas_reader.data.DataReader to load the desired data. As simple as that.
